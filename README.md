@@ -41,9 +41,23 @@ gh-quest scan \
 | `--include-bot-gated` | `false` | Include repos that auto-close unsolicited PRs |
 | `--json` | `false` | Output JSON instead of a table |
 
+## How the scoring works
+
+Each issue starts at **100** and is penalized for signals of difficulty or contention:
+
+| Signal | Effect |
+|---|---|
+| Existing competing PR | -40 per PR |
+| No activity in 90+ days | -20 |
+| No activity in 30+ days | -5 |
+| Repo with 50k+ stars | +10 |
+| Repo with 10k+ stars | +5 |
+
+Score is clamped to `[0, +∞)`. Sort descending to pick first.
+
 ## Status
 
-v0.0.1 — scaffolding only. Scanner is stubbed; expect first working release within the week.
+v0.1.0 — scanner working, scored, tested. Tested against mocked Octokit with 11 passing tests.
 
 ## License
 
