@@ -1,6 +1,6 @@
 {
   "name": "gh-quest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find good-first-issues that genuinely need contributors — filters out raced and bot-gated issues.",
   "keywords": [
     "github",
