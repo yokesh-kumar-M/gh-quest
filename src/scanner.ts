@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import type { IssueCandidate, ScanOptions, ScanResult } from "./types.js";
 import { isBotGated } from "./known-bots.js";
+import { createOctokit } from "./octokit.js";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -33,7 +34,7 @@ export async function scan(
   options: ScanOptions,
   deps: ScanDeps = {},
 ): Promise<ScanResult> {
-  const octokit = deps.octokit ?? new Octokit({ auth: options.token });
+  const octokit = deps.octokit ?? createOctokit({ auth: options.token });
   const candidates: IssueCandidate[] = [];
   const skipped: ScanResult["skipped"] = [];
 

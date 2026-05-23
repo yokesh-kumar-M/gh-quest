@@ -55,9 +55,18 @@ Each issue starts at **100** and is penalized for signals of difficulty or conte
 
 Score is clamped to `[0, +∞)`. Sort descending to pick first.
 
+## Rate limiting
+
+Scans of many repos hit GitHub's primary and secondary rate limits. `gh-quest` uses [`@octokit/plugin-throttling`](https://github.com/octokit/plugin-throttling.js) to:
+
+- Retry up to 2 times on primary rate-limit exhaustion (auth quota)
+- Always retry on secondary rate limits (abuse-detection cool-downs) — the server tells us exactly how long to wait
+
+You'll see a yellow warning when a retry happens. Scans will be slower under throttling but won't fail.
+
 ## Status
 
-v0.1.0 — scanner working, scored, tested. Tested against mocked Octokit with 11 passing tests.
+v0.1.1 — scanner working with graceful rate-limit handling, scored, tested. 11 passing tests against a mocked Octokit.
 
 ## License
 

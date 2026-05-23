@@ -9,7 +9,7 @@ const program = new Command();
 program
   .name("gh-quest")
   .description("Find good-first-issues that genuinely need contributors.")
-  .version("0.1.0");
+  .version("0.1.1");
 
 program
   .command("scan")
