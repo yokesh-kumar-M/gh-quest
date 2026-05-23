@@ -23,6 +23,8 @@ You'll also need a GitHub personal access token with `public_repo` read scope, e
 
 ## Usage
 
+Scan an explicit list of repos:
+
 ```sh
 gh-quest scan \
   --repos shadcn-ui/ui,vercel/next.js,prisma/prisma \
@@ -30,16 +32,39 @@ gh-quest scan \
   --max-existing-prs 1
 ```
 
+Or scan your starred repos (use what you already curate):
+
+```sh
+gh-quest scan --from-starred --star-limit 30
+```
+
+Scan someone else's starred repos (e.g., a maintainer whose taste you trust):
+
+```sh
+gh-quest scan --starred-by torvalds --star-limit 10
+```
+
+Combine sources — explicit repos and starred are merged and deduped:
+
+```sh
+gh-quest scan --repos owner/repo --from-starred
+```
+
 ### Flags
 
 | Flag | Default | Description |
 |---|---|---|
-| `-r, --repos` | _(required)_ | Comma-separated `owner/name` list |
+| `-r, --repos` | — | Comma-separated `owner/name` list |
+| `--from-starred` | `false` | Include authenticated user's starred repos |
+| `--starred-by <user>` | — | Include a specific user's starred repos |
+| `--star-limit <n>` | `20` | Cap on starred repos to include |
 | `-l, --labels` | `good first issue,help wanted` | Labels to match (OR'd) |
 | `--max-existing-prs` | `1` | Drop issues with more competing PRs than this |
 | `--max-stale-days` | `180` | Drop issues with no activity for longer than this |
 | `--include-bot-gated` | `false` | Include repos that auto-close unsolicited PRs |
 | `--json` | `false` | Output JSON instead of a table |
+
+At least one of `--repos`, `--from-starred`, or `--starred-by` is required.
 
 ## How the scoring works
 
@@ -66,7 +91,7 @@ You'll see a yellow warning when a retry happens. Scans will be slower under thr
 
 ## Status
 
-v0.1.1 — scanner working with graceful rate-limit handling, scored, tested. 11 passing tests against a mocked Octokit.
+v0.2.0 — scanner + `--from-starred` source + throttling. 15 passing tests against a mocked Octokit.
 
 ## License
 
